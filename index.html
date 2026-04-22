@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stryker Interview Prep — Divyanshi</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap');
+
+  :root {
+    --bg: #0f1117;
+    --surface: #181c25;
+    --surface2: #1e2330;
+    --border: #2a3040;
+    --accent: #4f8ef7;
+    --accent2: #38d9a9;
+    --accent3: #f7c94f;
+    --accent4: #f76f6f;
+    --text: #e8ecf4;
+    --muted: #7a8499;
+    --mono: 'IBM Plex Mono', monospace;
+    --sans: 'IBM Plex Sans', sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0 0 60px;
+  }
+
+  .hero {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 36px 40px 28px;
+  }
+
+  .hero-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .hero h1 {
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+
+  .hero p {
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  .tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 16px;
+  }
+
+  .tag {
+    font-family: var(--mono);
+    font-size: 10px;
+    padding: 3px 10px;
+    border-radius: 3px;
+    border: 1px solid;
+    letter-spacing: 0.06em;
+  }
+
+  .tag-sql { color: var(--accent); border-color: var(--accent); background: rgba(79,142,247,0.08); }
+  .tag-azure { color: var(--accent2); border-color: var(--accent2); background: rgba(56,217,169,0.08); }
+  .tag-bi { color: var(--accent3); border-color: var(--accent3); background: rgba(247,201,79,0.08); }
+  .tag-py { color: var(--accent4); border-color: var(--accent4); background: rgba(247,111,111,0.08); }
+  .tag-beh { color: #b197fc; border-color: #b197fc; background: rgba(177,151,252,0.08); }
+
+  .main { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+
+  /* NAV TABS */
+  .tabs {
+    display: flex;
+    gap: 2px;
+    border-bottom: 1px solid var(--border);
+    margin: 28px 0 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+
+  .tab {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    padding: 10px 18px;
+    cursor: pointer;
+    border: none;
+    background: none;
+    color: var(--muted);
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    transition: color 0.15s;
+  }
+  .tab:hover { color: var(--text); }
+  .tab.active { color: var(--text); border-bottom-color: var(--accent); }
+  .tab[data-cat="azure"].active { border-bottom-color: var(--accent2); color: var(--accent2); }
+  .tab[data-cat="bi"].active { border-bottom-color: var(--accent3); color: var(--accent3); }
+  .tab[data-cat="python"].active { border-bottom-color: var(--accent4); color: var(--accent4); }
+  .tab[data-cat="behavioral"].active { border-bottom-color: #b197fc; color: #b197fc; }
+  .tab[data-cat="resources"].active { border-bottom-color: #74c0fc; color: #74c0fc; }
+
+  .section { display: none; padding: 24px 0; }
+  .section.active { display: block; }
+
+  /* RESOURCES SECTION */
+  .res-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+
+  .res-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 18px;
+    transition: border-color 0.2s;
+  }
+  .res-card:hover { border-color: #3a4560; }
+
+  .res-platform {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    margin-bottom: 6px;
+  }
+  .res-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+  .res-desc { font-size: 12px; color: var(--muted); line-height: 1.6; margin-bottom: 12px; }
+  .res-topics { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 12px; }
+  .res-topic {
+    font-size: 10px;
+    font-family: var(--mono);
+    padding: 2px 7px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    color: var(--muted);
+  }
+  .res-link {
+    display: inline-block;
+    font-size: 11px;
+    font-family: var(--mono);
+    color: var(--accent);
+    text-decoration: none;
+    border: 1px solid var(--accent);
+    padding: 4px 10px;
+    border-radius: 3px;
+    transition: background 0.15s;
+  }
+  .res-link:hover { background: rgba(79,142,247,0.1); }
+
+  .res-section-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin: 24px 0 12px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* Q&A SECTION */
+  .qa-intro {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 6px 6px 0;
+    padding: 12px 16px;
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 20px;
+    line-height: 1.6;
+  }
+
+  .qa-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 12px;
+    overflow: hidden;
+  }
+
+  .qa-q {
+    padding: 14px 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    user-select: none;
+  }
+  .qa-q:hover { background: var(--surface2); }
+
+  .qa-icon {
+    font-family: var(--mono);
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 3px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .icon-sql { background: rgba(79,142,247,0.15); color: var(--accent); }
+  .icon-azure { background: rgba(56,217,169,0.15); color: var(--accent2); }
+  .icon-bi { background: rgba(247,201,79,0.15); color: var(--accent3); }
+  .icon-py { background: rgba(247,111,111,0.15); color: var(--accent4); }
+  .icon-beh { background: rgba(177,151,252,0.15); color: #b197fc; }
+
+  .qa-q-text {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+    flex: 1;
+    line-height: 1.5;
+  }
+
+  .qa-difficulty {
+    font-family: var(--mono);
+    font-size: 9px;
+    padding: 2px 7px;
+    border-radius: 10px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .diff-hard { background: rgba(247,111,111,0.15); color: var(--accent4); }
+  .diff-med { background: rgba(247,201,79,0.15); color: var(--accent3); }
+  .diff-easy { background: rgba(56,217,169,0.15); color: var(--accent2); }
+
+  .qa-chevron {
+    font-size: 10px;
+    color: var(--muted);
+    flex-shrink: 0;
+    margin-top: 3px;
+    transition: transform 0.2s;
+  }
+  .qa-item.open .qa-chevron { transform: rotate(90deg); }
+
+  .qa-a {
+    display: none;
+    padding: 0 16px 16px 16px;
+    border-top: 1px solid var(--border);
+  }
+  .qa-item.open .qa-a { display: block; }
+
+  .qa-a-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--accent2);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin: 12px 0 6px;
+  }
+
+  .qa-a-text {
+    font-size: 13px;
+    color: #c8d0e0;
+    line-height: 1.75;
+  }
+
+  .code-block {
+    background: #0a0d14;
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    padding: 12px 14px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: #a8b8d8;
+    margin: 10px 0;
+    overflow-x: auto;
+    line-height: 1.6;
+    white-space: pre;
+  }
+
+  .kw { color: #4f8ef7; }
+  .fn { color: #38d9a9; }
+  .str { color: #f7c94f; }
+  .cm { color: #4a5568; font-style: italic; }
+  .num { color: #f76f6f; }
+
+  .tip-box {
+    background: rgba(79,142,247,0.06);
+    border: 1px solid rgba(79,142,247,0.2);
+    border-radius: 5px;
+    padding: 10px 14px;
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 10px;
+    line-height: 1.6;
+  }
+  .tip-box strong { color: var(--accent); }
+
+  .warn-box {
+    background: rgba(247,111,111,0.06);
+    border: 1px solid rgba(247,111,111,0.2);
+    border-radius: 5px;
+    padding: 10px 14px;
+    font-size: 12px;
+    color: #f4a0a0;
+    margin-top: 10px;
+    line-height: 1.6;
+  }
+  .warn-box strong { color: var(--accent4); }
+
+  .progress-bar {
+    height: 2px;
+    background: var(--border);
+    border-radius: 2px;
+    margin: 20px 0 14px;
+  }
+  .progress-fill {
+    height: 100%;
+    border-radius: 2px;
+    transition: width 0.4s ease;
+  }
+
+  .stat-row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  .stat {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 12px 16px;
+    flex: 1;
+    min-width: 120px;
+  }
+  .stat-num {
+    font-family: var(--mono);
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .stat-label { font-size: 11px; color: var(--muted); margin-top: 2px; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-label">// interview prep kit</div>
+  <h1>Stryker — Data Engineering Interview</h1>
+  <p>Resources + Q&A from interviewer perspective · IIT-level prep · Divyanshi Bhatnagar</p>
+  <div class="tags">
+    <span class="tag tag-sql">SQL</span>
+    <span class="tag tag-azure">Azure</span>
+    <span class="tag tag-bi">Power BI</span>
+    <span class="tag tag-py">Python</span>
+    <span class="tag tag-beh">Behavioral</span>
+  </div>
+</div>
+
+<div class="main">
+  <div class="tabs">
+    <button class="tab active" data-cat="resources" onclick="switchTab('resources', this)">📚 Resources</button>
+    <button class="tab" data-cat="sql" onclick="switchTab('sql', this)">SQL</button>
+    <button class="tab" data-cat="azure" onclick="switchTab('azure', this)">Azure</button>
+    <button class="tab" data-cat="bi" onclick="switchTab('bi', this)">Power BI</button>
+    <button class="tab" data-cat="python" onclick="switchTab('python', this)">Python</button>
+    <button class="tab" data-cat="behavioral" onclick="switchTab('behavioral', this)">Behavioral</button>
+  </div>
+
+  <!-- ═══ RESOURCES ═══ -->
+  <div class="section active" id="sec-resources">
+
+    <div class="res-section-label">SQL — Best Free Resources</div>
+    <div class="res-grid">
+      <div class="res-card">
+        <div class="res-platform tag-sql" style="color:var(--accent)">YOUTUBE</div>
+        <div class="res-title">Ankit Bansal — SQL</div>
+        <div class="res-desc">Best Indian SQL YouTuber. Covers window functions, CTEs, execution order with real interview problems. His "SQL Interview Questions" playlist is gold.</div>
+        <div class="res-topics">
+          <span class="res-topic">Window Functions</span>
+          <span class="res-topic">CTEs</span>
+          <span class="res-topic">Complex Joins</span>
+          <span class="res-topic">Interview Problems</span>
+        </div>
+        <a href="https://www.youtube.com/@ankitbansal6" target="_blank" class="res-link">→ Open Channel</a>
+      </div>
+      <div class="res-card">
+        <div class="res-platform" style="color:var(--accent)">YOUTUBE</div>
+        <div class="res-title">techTFQ — SQL Interview Prep</div>
+        <div class="res-desc">Extremely focused on solving hard SQL problems from scratch. Teaches you to think through problems live — exactly what you need for cross-questioning.</div>
+        <div class="res-topics">
+          <span class="res-topic">Hard Problems</span>
+          <span class="res-topic">Execution Flow</span>
+          <span class="res-topic">Ranking</span>
+          <span class="res-topic">Anti-joins</span>
+        </div>
+        <a href="https://www.youtube.com/@techTFQ" target="_blank" class="res-link">→ Open Channel</a>
+      </div>
+      <div class="res-card">
+        <div class="res-platform" style="color:var(--accent)">PRACTICE SITE</div>
+        <div class="res-title">StrataScratch</div>
+        <div class="res-desc">Real interview questions from companies like Google, Amazon, Microsoft. Filter by difficulty and company. Best platform for SQL practice with actual data.</div>
+        <div class="res-topics">
+          <span class="res-topic">Real Interview Qs</span>
+          <span class="res-topic">Medium/Hard</span>
+          <span class="res-topic">Solutions Included</span>
+        </div>
+        <a href="https://www.stratascratch.com" target="_blank" class="res-link">→ Open Site</a>
+      </div>
+    </div>
+
+    <div class="res-section-label">Azure — Best Free Resources</div>
+    <div class="res-grid">
+      <div class="res-card">
+        <div class="res-platform" style="color:var(--accent2)">YOUTUBE</div>
+        <div class="res-title">Adam Marczak — Azure for Everyone</div>
+        <div class="res-desc">The best beginner Azure channel. Shows portal live, explains visually. Watch his Azure SQL, Blob Storage, ADF, and Power BI + Azure playlists in that order.</div>
+        <div class="res-topics">
+          <span class="res-topic">Azure SQL</span>
+          <span class="res-topic">Blob Storage</span>
+          <span class="res-topic">ADF</span>
+          <span class="res-topic">Zero to Hero</span>
+        </div>
+        <a href="https://www.youtube.com/@AdamMarczak" target="_blank" class="res-link">→ Open Channel</a>
+      </div>
+      <div class="res-card">
+        <div class="res-platform" style="color:var(--accent2)">YOUTUBE</div>
+        <div class="res-title">WafaStudies — Azure Data Engineering</div>
+        <div class="res-desc">Specifically covers DP-203 (Azure Data Engineer path). Great for ADF pipelines, Azure SQL, Data Lake. Very practical, shows real portal steps.</div>
+        <div class="res-topics">
+          <span class="res-topic">ADF Pipelines</span>
+          <span class="res-topic">Data Lake</span>
+          <span class="res-topic">Azure SQL</span>
+          <span class="res-topic">DP-203 Track</span>
+        </div>
+        <a href="https://www.youtube.com/@WafaStudies" target="_blank" class="res-link">→ Open Channel</a>
+      </div>
+      <div class="res-card">
+        <div class="res-platform" style="color:var(--accent2)">HANDS-ON LAB</div>
+        <div class="res-title">Microsoft Learn — Free Azure Sandbox</div>
+        <div class="res-desc">Official Microsoft labs — no credit card needed for sandboxes. Do the DP-900 path. Gives you real Azure portal access for free for each exercise.</div>
+        <div class="res-topics">
+          <span class="res-topic">Free Sandbox</span>
+          <span class="res-topic">DP-900</span>
+          <span class="res-topic">Official Content</span>
+        </div>
+        <a href="https://learn.microsoft.com/en-us/training/paths/azure-data-fundamentals-explore-core-data-concepts/" target="_blank" class="res-link">→ Open Path</a>
+      </div>
+    </div>
+
+    <div class="res-section-label">Power BI — Best Free Resources</div>
+    <div class="res-grid">
+      <div class="res-card">
+        <div class="res-platform" style="color:var(--accent3)">YOUTUBE</div>
+        <div class="res-title">Guy in a Cube — Power BI</div>
+        <div class="res-desc">Best Power BI channel globally. Microsoft MVPs running it. Covers DAX, RLS, Power Query, performance optimization. Watch their "Power BI Interview Questions" videos.</div>
+        <div class="res-topics">
+          <span class="res-topic">DAX</span>
+          <span class="res-topic">RLS</span>
+          <span class="res-topic">Performance</span>
+          <span class="res-topic">Interview Prep</span>
+        </div>
+        <a href="https://www.youtube.com/@GuyInACube" target="_blank" class="res-link">→ Open Channel</a>
+      </div>
+      <div class="res-card">
+        <div class="res-platform" style="color:var(--accent3)">YOUTUBE</div>
+        <div class="res-title">Avi Singh — Power BI</div>
+        <div class="res-desc">Great for DAX from basics to advanced. His "DAX Fridays" series teaches CALCULATE, FILTER, time intelligence clearly. Good for interview-level DAX questions.</div>
+        <div class="res-topics">
+          <span class="res-topic">DAX Deep Dive</span>
+          <span class="res-topic">CALCULATE</span>
+          <span class="res-topic">Time Intelligence</span>
+        </div>
+        <a href="https://www.youtube.com/@AviSinghPowerBI" target="_blank" class="res-link">→ Open Channel</a>
+      </div>
+    </div>
+
+    <div class="res-section-label">Python for Data — Best Free Resources</div>
+    <div class="res-grid">
+      <div class="res-card">
+        <div class="res-platform" style="color:var(--accent4)">YOUTUBE</div>
+        <div class="res-title">Keith Galli — Pandas</div>
+        <div class="res-desc">Best Pandas tutorial on YouTube. Very practical — covers groupby, merge, apply, handling nulls. Exactly what gets asked in interviews for analyst/DE roles.</div>
+        <div class="res-topics">
+          <span class="res-topic">Pandas</span>
+          <span class="res-topic">GroupBy</span>
+          <span class="res-topic">Merge/Join</span>
+          <span class="res-topic">Data Cleaning</span>
+        </div>
+        <a href="https://www.youtube.com/@KeithGalli" target="_blank" class="res-link">→ Open Channel</a>
+      </div>
+      <div class="res-card">
+        <div class="res-platform" style="color:var(--accent4)">PRACTICE</div>
+        <div class="res-title">LeetCode — Pandas Problems</div>
+        <div class="res-desc">LeetCode added a Pandas section with 30+ problems. Directly mirrors SQL interview problems but in Python. Free tier has enough to practice.</div>
+        <div class="res-topics">
+          <span class="res-topic">Pandas</span>
+          <span class="res-topic">Data Manipulation</span>
+          <span class="res-topic">Interview Style</span>
+        </div>
+        <a href="https://leetcode.com/studyplan/introduction-to-pandas/" target="_blank" class="res-link">→ Open Plan</a>
+      </div>
+    </div>
+
+    <div class="res-section-label">Suggested Daily Order This Week</div>
+    <div class="res-card" style="padding:16px 20px">
+      <div style="display:grid;grid-template-columns:80px 1fr;gap:6px 16px;font-size:12px;">
+        <span style="color:var(--accent);font-family:var(--mono)">Day 1–2</span><span style="color:var(--muted)">Ankit Bansal + techTFQ → SQL execution order, window functions, CTEs. Practice 5 problems on StrataScratch.</span>
+        <span style="color:var(--accent2);font-family:var(--mono)">Day 3–4</span><span style="color:var(--muted)">Adam Marczak → Azure SQL + Blob Storage + ADF. Set up free Azure account and run one real pipeline.</span>
+        <span style="color:var(--accent3);font-family:var(--mono)">Day 5</span><span style="color:var(--muted)">Guy in a Cube → DAX, RLS, Power BI + Azure connection. Build or refresh your dashboard.</span>
+        <span style="color:var(--accent4);font-family:var(--mono)">Day 6</span><span style="color:var(--muted)">Keith Galli → Pandas + LeetCode Pandas problems. Focus on groupby, merge, anomaly detection.</span>
+        <span style="color:#b197fc;font-family:var(--mono)">Day 7</span><span style="color:var(--muted)">Full mock interview — answer every Q in the other tabs out loud. Record yourself if possible.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SQL Q&A ═══ -->
+  <div class="section" id="sec-sql">
+    <div class="qa-intro">
+      <strong style="color:var(--accent)">IIT interviewer style:</strong> He won't just ask definitions. He'll give you a query and ask what's wrong, or give a business problem and ask you to write SQL live. Think out loud every time.
+    </div>
+
+    <div id="qa-sql"></div>
+  </div>
+
+  <!-- ═══ AZURE Q&A ═══ -->
+  <div class="section" id="sec-azure">
+    <div class="qa-intro">
+      <strong style="color:var(--accent2)">Stay grounded:</strong> Say "I've worked with" not "I'm an expert in." He will respect honesty + curiosity over fake expertise. Don't claim things you can't back up.
+    </div>
+    <div id="qa-azure"></div>
+  </div>
+
+  <!-- ═══ POWER BI Q&A ═══ -->
+  <div class="section" id="sec-bi">
+    <div class="qa-intro">
+      <strong style="color:var(--accent3)">This is your strongest area.</strong> Own it confidently. Reference your actual resume metrics — DSO reduction, classification accuracy, stakeholder count.
+    </div>
+    <div id="qa-bi"></div>
+  </div>
+
+  <!-- ═══ PYTHON Q&A ═══ -->
+  <div class="section" id="sec-python">
+    <div class="qa-intro">
+      <strong style="color:var(--accent4)">Keep it grounded:</strong> Don't claim ML expertise. You used Python for Pandas-based analysis and anomaly detection. That's enough — be specific and honest.
+    </div>
+    <div id="qa-python"></div>
+  </div>
+
+  <!-- ═══ BEHAVIORAL Q&A ═══ -->
+  <div class="section" id="sec-behavioral">
+    <div class="qa-intro">
+      <strong style="color:#b197fc">STAR method always:</strong> Situation → Task → Action → Result. Every behavioral answer needs a number or outcome at the end. Vague answers = weak impression.
+    </div>
+    <div id="qa-behavioral"></div>
+  </div>
+</div>
+
+<script>
+const data = {
+  sql: [
+    {
+      q: "What is SQL execution order? Walk me through this query step by step.",
+      diff: "hard",
+      a: `SQL does NOT run in the order you write it. The actual execution order is:\n\nFROM → JOIN → WHERE → GROUP BY → HAVING → SELECT → DISTINCT → ORDER BY → LIMIT\n\nMost candidates blank on this. Key points:\n• WHERE runs before SELECT — so you cannot use a SELECT alias in WHERE\n• Window functions run in SELECT phase — so you cannot use them in WHERE directly\n• HAVING runs after GROUP BY — use it to filter aggregated results`,
+      code: `SELECT supplier_id, COUNT(*) AS total_orders, SUM(amount) AS total_spend\nFROM purchase_orders         -- Step 1: load table\nWHERE status = 'Completed'   -- Step 2: filter rows (before grouping)\nGROUP BY supplier_id         -- Step 3: group\nHAVING SUM(amount) > 50000   -- Step 4: filter groups\nORDER BY total_spend DESC;   -- Step 5: sort`,
+      tip: "Say out loud: First FROM loads the table, WHERE filters individual rows before any grouping happens, GROUP BY creates supplier groups, HAVING filters those groups, SELECT calculates the final columns, ORDER BY sorts the output."
+    },
+    {
+      q: "Find all purchase orders that have NO matching invoice. Write the SQL.",
+      diff: "hard",
+      a: "This is the anti-join pattern. The trick is LEFT JOIN + WHERE NULL on the right table's key column.",
+      code: `-- WRONG approach (inner join won't return unmatched rows)\nSELECT * FROM purchase_orders p\nINNER JOIN invoices i ON p.po_id = i.po_id\nWHERE i.amount IS NULL  -- this never returns anything\n\n-- CORRECT approach\nSELECT p.*\nFROM purchase_orders p\nLEFT JOIN invoices i ON p.po_id = i.po_id\nWHERE i.po_id IS NULL  -- NULL means no invoice matched this PO`,
+      tip: "If he asks why: LEFT JOIN keeps all POs even with no invoice. Where there is no match, all invoice columns come back as NULL. Filtering WHERE invoice column IS NULL gives exactly the unmatched records. This is called an anti-join."
+    },
+    {
+      q: "What is the difference between ROW_NUMBER, RANK, and DENSE_RANK? When would you use each?",
+      diff: "hard",
+      a: "All three are window functions for ranking rows. The difference is how they handle ties.",
+      code: `SELECT supplier_id, spend,\n  ROW_NUMBER()  OVER (ORDER BY spend DESC) AS row_num,   -- 1,2,3,4 always unique\n  RANK()        OVER (ORDER BY spend DESC) AS rnk,       -- 1,1,3,4 skips after tie\n  DENSE_RANK()  OVER (ORDER BY spend DESC) AS dense_rnk  -- 1,1,2,3 no skipping\nFROM supplier_summary`,
+      tip: "Interview trick question: 'Find the 2nd highest spend supplier.' Use DENSE_RANK not RANK — because if two suppliers tie for 1st, RANK skips 2 and goes to 3. WHERE rnk = 2 would return nothing. DENSE_RANK gives 1,1,2 so you always get the actual second value."
+    },
+    {
+      q: "What is the difference between a CTE and a subquery? When would you prefer one over the other?",
+      diff: "med",
+      a: "Functionally they often produce the same result. The difference is readability, reusability, and in some cases performance.",
+      code: `-- Subquery version\nSELECT supplier_id, total_spend\nFROM (\n    SELECT supplier_id, SUM(amount) AS total_spend\n    FROM purchase_orders GROUP BY supplier_id\n) AS summary\nWHERE total_spend > 50000\n\n-- CTE version (preferred)\nWITH summary AS (\n    SELECT supplier_id, SUM(amount) AS total_spend\n    FROM purchase_orders GROUP BY supplier_id\n)\nSELECT supplier_id, total_spend\nFROM summary\nWHERE total_spend > 50000`,
+      tip: "Say: I prefer CTEs for complex logic because they read like named steps — easier to debug, review, and reuse within the same query. Subqueries are fine for simple one-off filters. CTEs can also be recursive which subqueries cannot."
+    },
+    {
+      q: "Calculate month-over-month revenue growth percentage using SQL.",
+      diff: "hard",
+      a: "This requires LAG() window function to get the previous month's value, then calculate the percentage change.",
+      code: `WITH monthly AS (\n    SELECT \n        FORMAT(order_date, 'yyyy-MM') AS month,\n        SUM(amount) AS revenue\n    FROM purchase_orders\n    GROUP BY FORMAT(order_date, 'yyyy-MM')\n)\nSELECT \n    month,\n    revenue,\n    LAG(revenue, 1) OVER (ORDER BY month) AS prev_revenue,\n    ROUND(\n        (revenue - LAG(revenue,1) OVER (ORDER BY month)) * 100.0\n        / NULLIF(LAG(revenue,1) OVER (ORDER BY month), 0), 2\n    ) AS mom_growth_pct\nFROM monthly`,
+      tip: "Notice NULLIF(..., 0) — this prevents division by zero if previous month revenue was 0. This kind of edge case handling impresses IIT-level interviewers. Always mention it."
+    },
+    {
+      q: "What is an index? What is the difference between clustered and non-clustered? When would you add one?",
+      diff: "med",
+      a: "An index speeds up data retrieval like a book index — without it SQL does a full table scan reading every row.\n\n• Clustered index: physically sorts the table by that column. Only ONE per table. Usually the primary key.\n• Non-clustered index: separate lookup structure. Multiple allowed per table.\n\nAdd an index on columns frequently used in WHERE, JOIN ON, and ORDER BY clauses.",
+      tip: "Cross-question he'll ask: 'When would you NOT add an index?' Answer: On columns with very low cardinality (like a boolean/flag column — only 2 values, index is useless). Also avoid over-indexing on tables with heavy INSERT/UPDATE load because every write has to update all indexes too."
+    },
+    {
+      q: "Your query is running very slow on a large table. Walk me through how you would debug and fix it.",
+      diff: "hard",
+      a: "Step by step approach:\n1. Check the execution plan (Ctrl+M in SSMS) — look for Table Scans, high cost operations\n2. Check if WHERE/JOIN columns have indexes\n3. Avoid functions on indexed columns in WHERE — this kills the index\n4. Replace SELECT * with specific columns\n5. Check for unnecessary JOINs or subqueries\n6. Consider breaking into CTEs for optimizer hints",
+      code: `-- BAD: function on indexed column kills the index\nWHERE YEAR(order_date) = 2024\n\n-- GOOD: range filter uses the index\nWHERE order_date >= '2024-01-01' AND order_date < '2025-01-01'\n\n-- BAD: SELECT * reads all columns unnecessarily\nSELECT * FROM purchase_orders\n\n-- GOOD: only what you need\nSELECT po_id, supplier_id, amount FROM purchase_orders`
+    },
+    {
+      q: "What does NULL = NULL return? How do you properly handle NULLs in SQL?",
+      diff: "med",
+      a: "NULL = NULL returns NULL, not TRUE. NULL means unknown — you cannot compare unknown with unknown using =.\n\nAlways use IS NULL or IS NOT NULL.\n\nKey NULL functions:\n• COALESCE(col, default) — returns first non-NULL value\n• ISNULL(col, default) — SQL Server specific\n• NULLIF(a, b) — returns NULL if a equals b (used to prevent division by zero)",
+      code: `SELECT COALESCE(discount, 0) AS discount      -- if NULL use 0\nSELECT NULLIF(denominator, 0)                  -- returns NULL instead of divide by zero\nSELECT COUNT(*) vs COUNT(column_name)          -- COUNT(*) includes NULLs, COUNT(col) ignores them`
+    }
+  ],
+
+  azure: [
+    {
+      q: "What Azure services have you worked with and how did you use them in your projects?",
+      diff: "easy",
+      a: "Frame your answer around your resume projects:\n\n• Azure SQL Database — stored transformed supplier and invoice data; connected Power BI via DirectQuery\n• Azure Blob Storage — used as a staging layer where raw CSV files from vendor systems were dropped before processing\n• Azure Data Factory — created copy activity pipelines to move data from Blob Storage into Azure SQL Database\n• Power Apps + SharePoint — built canvas app for procurement workflow tracking",
+      tip: "Always tie the service to a business outcome. Don't just say 'I used Azure SQL' — say 'I used Azure SQL to store transformed reporting data, which Power BI connected to for live dashboard refresh.'"
+    },
+    {
+      q: "What is Azure Data Factory and how does a pipeline work?",
+      diff: "med",
+      a: "Azure Data Factory is Azure's cloud ETL/ELT orchestration service. It moves and transforms data between sources without you managing infrastructure.\n\nKey components:\n• Linked Services — connection strings to data sources (like SQL Server, Blob, Salesforce)\n• Datasets — define the structure of data in a linked service\n• Pipelines — container for a set of activities\n• Activities — the actual work: Copy Activity, Data Flow, Lookup, etc.\n• Triggers — schedule or event-based pipeline execution",
+      tip: "Compare it to something you know: 'Think of ADF as a cloud version of SSIS — you define source, transformation, destination, and schedule. The difference is you don't manage any servers.'"
+    },
+    {
+      q: "What is the difference between Azure SQL Database and SQL Server on-premises?",
+      diff: "easy",
+      a: "SQL Server on-premises: installed on your own server, you manage patching, backups, hardware, scaling.\n\nAzure SQL Database: fully managed PaaS (Platform as a Service). Microsoft handles patching, backups, high availability, and scaling. You just connect and query — same T-SQL syntax.\n\nOther differences:\n• Azure SQL has built-in geo-replication and auto-failover\n• Pricing is consumption-based (DTUs or vCores)\n• You connect via connection string — same SSMS or Azure Data Studio"
+    },
+    {
+      q: "What is RBAC in Azure? How did you use it?",
+      diff: "med",
+      a: "RBAC = Role-Based Access Control. Controls who can do what on which Azure resources.\n\nYou assign roles at 3 levels:\n• Subscription level — access to everything\n• Resource Group level — access to a group of resources\n• Resource level — access to one specific resource\n\nBuilt-in roles: Reader (view only), Contributor (create/manage), Owner (full control including access management).\n\nIn my Power BI work I implemented Row-Level Security mapped to Azure Active Directory groups — so regional procurement managers only saw their own supplier segment data.",
+      tip: "If he pushes deeper on AAD: Azure Active Directory is Microsoft's cloud identity service — like a corporate directory. You create users and groups in AAD, then assign those groups to Power BI RLS roles or Azure resource roles."
+    },
+    {
+      q: "What is Azure Blob Storage? How is it different from Azure SQL Database?",
+      diff: "easy",
+      a: "Blob Storage is Azure's unstructured object storage — stores any file type: CSV, JSON, images, logs, Parquet files. Think of it as a folder in the cloud.\n\nAzure SQL Database stores structured relational data in tables — rows and columns with schema.\n\nIn a data pipeline they work together:\n1. Raw files land in Blob Storage (landing zone / staging)\n2. ADF picks them up and transforms them\n3. Transformed structured data loads into Azure SQL Database\n4. Power BI reads from Azure SQL for dashboards"
+    },
+    {
+      q: "What is DirectQuery vs Import mode in Power BI when connecting to Azure SQL?",
+      diff: "med",
+      a: "Import mode: Power BI pulls data into its own in-memory engine. Very fast queries but data is only as fresh as the last scheduled refresh (max 8x/day on Pro).\n\nDirectQuery: Every Power BI interaction sends a live query to Azure SQL Database. Always current but slower — performance depends on Azure SQL query speed.\n\nFor supplier procurement data that updates frequently: I'd use DirectQuery or a scheduled hourly refresh in Import mode depending on how real-time the business needs the data."
+    }
+  ],
+
+  bi: [
+    {
+      q: "What is DAX? Write a measure for Month-to-Date revenue.",
+      diff: "med",
+      a: "DAX (Data Analysis Expressions) is the formula language used in Power BI for calculated columns and measures.",
+      code: `-- MTD Revenue\nMTD Revenue = CALCULATE(\n    SUM(Sales[Amount]),\n    DATESMTD(Calendar[Date])\n)\n\n-- YTD Revenue\nYTD Revenue = CALCULATE(\n    SUM(Sales[Amount]),\n    DATESYTD(Calendar[Date])\n)\n\n-- MoM Growth %\nMoM Growth % = \nVAR current = [Total Revenue]\nVAR previous = CALCULATE([Total Revenue], PREVIOUSMONTH(Calendar[Date]))\nRETURN DIVIDE(current - previous, previous, 0) * 100`,
+      tip: "Always use VAR in DAX for complex measures — it improves readability and performance by calculating each value only once. Mention this in the interview."
+    },
+    {
+      q: "What is Row-Level Security in Power BI? How did you implement it?",
+      diff: "med",
+      a: "RLS restricts what data a user sees based on their identity, without creating separate reports.\n\nImplementation steps:\n1. In Power BI Desktop → Modeling → Manage Roles\n2. Create a role with a DAX filter: [Region] = USERNAME() or a specific value\n3. Publish to Power BI Service\n4. Assign Azure AD users or groups to each role\n\nIn my Thrillophilia project I used RLS so regional managers only saw their territory's booking and revenue data.",
+      code: `-- Dynamic RLS: filter by logged-in user's email\n[manager_email] = USERPRINCIPALNAME()\n\n-- Static RLS: hardcode a region per role\n[region] = "North India"`,
+      tip: "Cross-question: 'What is the difference between static and dynamic RLS?' Static: you hardcode the filter value in each role. Dynamic: uses USERPRINCIPALNAME() or USERNAME() to match the logged-in user against a table — scales better with many users."
+    },
+    {
+      q: "A Power BI report is loading very slowly. How do you diagnose and fix it?",
+      diff: "hard",
+      a: "Step by step:\n1. Open Performance Analyzer (View → Performance Analyzer) — shows render time per visual\n2. Identify the slowest visual — usually a table or matrix with too many rows\n3. Check DAX measures — use DAX Studio to find inefficient measures\n4. Common fixes:\n   • Reduce columns in the data model (remove unused columns)\n   • Avoid bidirectional relationships — they cause filter ambiguity and slow queries\n   • Use aggregations for large tables\n   • Replace row-level calculations with measures\n   • Avoid using calculated columns when a measure will do",
+      tip: "Mention DAX Studio by name — it's a free external tool that connects to Power BI and shows you query execution time, measure dependencies, and query plans. IIT-level interviewers appreciate knowing you use professional tooling."
+    },
+    {
+      q: "What is the difference between a calculated column and a measure in Power BI?",
+      diff: "med",
+      a: "Calculated column: computed row by row during data refresh, stored in the model, takes memory. Use when you need to slice/filter by the result.\n\nMeasure: computed on the fly at query time based on the current filter context. Takes no storage. Use for aggregations like SUM, AVERAGE, COUNT that change based on what's selected.\n\nRule of thumb: if you need to put it on a row or use it as a filter → calculated column. If you need an aggregate number on a visual → measure.",
+      code: `-- Calculated column (stored per row)\nProfit Margin Column = Sales[Revenue] - Sales[Cost]\n\n-- Measure (computed dynamically)\nTotal Profit = SUM(Sales[Revenue]) - SUM(Sales[Cost])`
+    },
+    {
+      q: "How did you track AR/AP and DSO in your Power BI dashboards at Dentalkart?",
+      diff: "easy",
+      a: "This is from your resume — answer with specifics:\n\nI built an AR Outstanding Dashboard with aging buckets (0-30, 31-60, 61-90, 90+ days overdue). The aging logic was a calculated column using DATEDIFF between invoice date and today.\n\nFor DSO: DSO = (Total AR Outstanding / Total Revenue) × Number of Days. I tracked this as a KPI card with conditional formatting — green below target, red above.\n\nDrilling down: clicking a bucket showed the individual invoices, customer names, and amounts — built using Power BI drill-through.",
+      code: `-- Aging bucket calculated column\nAging Bucket = \nSWITCH(TRUE(),\n    DATEDIFF(AR[InvoiceDate], TODAY(), DAY) <= 30, "0-30 days",\n    DATEDIFF(AR[InvoiceDate], TODAY(), DAY) <= 60, "31-60 days",\n    DATEDIFF(AR[InvoiceDate], TODAY(), DAY) <= 90, "61-90 days",\n    "90+ days"\n)\n\n-- DSO Measure\nDSO = DIVIDE(SUM(AR[Outstanding]), SUM(Revenue[Monthly])) * 30`
+    }
+  ],
+
+  python: [
+    {
+      q: "How have you used Python in your work? Be specific.",
+      diff: "easy",
+      a: "Keep this grounded to what's on your resume:\n\nAt Zikrr Perfumes: Used Python (Pandas) to clean and analyse customer survey data — groupby for segmentation, value_counts for response distribution, crosstab for demographic breakdowns.\n\nIn my Revenue Data Quality project: Used scipy.stats zscore for anomaly detection on transaction amounts — flagged outliers with Z-score > 3 for finance team review before month-close, reducing correction cycles by 50%.",
+      code: `import pandas as pd\nfrom scipy import stats\n\ndf = pd.read_csv('invoices.csv')\n\n# Z-score anomaly detection\ndf['z_score'] = stats.zscore(df['amount'])\nanomalies = df[df['z_score'].abs() > 3]\n\nprint(f"Found {len(anomalies)} anomalous transactions")\nprint(anomalies[['invoice_id', 'amount', 'z_score']])`
+    },
+    {
+      q: "What is the difference between merge and join in Pandas? Write an example.",
+      diff: "med",
+      a: "In Pandas, merge() is the primary way to combine DataFrames — similar to SQL JOIN. join() is a shortcut that joins on the index by default.\n\nFor most interview purposes, merge() is what you'll use and explain.",
+      code: `import pandas as pd\n\n# merge() - like SQL JOIN\nresult = pd.merge(\n    purchase_orders,\n    suppliers,\n    on='supplier_id',       # join key\n    how='left'              # left, right, inner, outer\n)\n\n# Find unmatched POs (anti-join equivalent)\nunmatched = pd.merge(\n    purchase_orders,\n    invoices,\n    on='po_id',\n    how='left',\n    indicator=True\n).query('_merge == \"left_only\"')`
+    },
+    {
+      q: "What is groupby in Pandas? Write a supplier spend summary.",
+      diff: "easy",
+      a: "groupby() splits the DataFrame into groups, applies a function, and combines results — exactly like SQL GROUP BY.",
+      code: `import pandas as pd\n\n# Supplier spend summary\nsummary = (\n    df.groupby('supplier_id')\n    .agg(\n        total_spend=('amount', 'sum'),\n        order_count=('po_id', 'count'),\n        avg_order=('amount', 'mean')\n    )\n    .reset_index()\n    .sort_values('total_spend', ascending=False)\n)\n\n# Filter top suppliers over 50k spend\ntop_suppliers = summary[summary['total_spend'] > 50000]`
+    },
+    {
+      q: "How do you handle missing values in a dataset? What are the options?",
+      diff: "med",
+      a: "Three main strategies:\n\n1. Drop — remove rows or columns with nulls. Use when missing data is random and few.\n2. Fill — replace with a value: mean, median, mode, forward fill, or a business default like 0.\n3. Flag — create an indicator column noting that data was missing — useful in ML pipelines.\n\nBusiness context matters: for a financial amount column, filling with 0 is wrong — it implies no payment. Better to flag and investigate.",
+      code: `df.isnull().sum()                         # check missing counts per column\n\ndf['amount'].fillna(0)                    # fill with zero\ndf['amount'].fillna(df['amount'].mean())  # fill with mean\ndf['amount'].ffill()                      # forward fill (time series)\ndf.dropna(subset=['amount', 'po_id'])     # drop rows where these are null\n\n# Flag approach\ndf['amount_missing'] = df['amount'].isnull().astype(int)`
+    }
+  ],
+
+  behavioral: [
+    {
+      q: "Tell me about yourself.",
+      diff: "easy",
+      a: "I'm a Data Analyst with 2.6 years of experience across finance and travel e-commerce at Dentalkart and Thrillophilia. My work sits at the intersection of SQL, Power BI, and cloud data pipelines — I've built dashboards that reduced DSO by 12 days, automated reconciliation workflows improving data accuracy from 45% to 90%, and worked with Azure SQL and Blob Storage to build more scalable data architecture.\n\nI have a B.E. in Computer Science and an MBA in Business Analytics — which means I can talk to both technical teams and business stakeholders. I'm now actively transitioning into Data Engineering, and this role at Stryker is exactly where I want to take that next step.",
+      tip: "Keep this to 60-90 seconds. Practice it until it sounds natural, not rehearsed. End with why this role specifically."
+    },
+    {
+      q: "Why are you transitioning from Data Analyst to Data Engineering?",
+      diff: "med",
+      a: "In both my analyst roles I kept being pulled toward the upstream problem — where does this data come from, why is the pipeline unreliable, how do we make this scalable for more teams. I naturally gravitated toward building the infrastructure, not just consuming it.\n\nAt Thrillophilia I set up Azure Blob Storage staging and Azure SQL pipelines not because it was my job description but because it was the right solution. At Dentalkart I designed the ETL workflows from scratch.\n\nData Engineering formalises that direction. I want to build the systems that power analytics — not just use them.",
+      tip: "This answer is strong because it shows the transition happened organically through work, not just because you want a job title change. IIT interviewers respect intellectual honesty."
+    },
+    {
+      q: "Tell me about a time you improved data quality significantly.",
+      diff: "med",
+      a: "At Dentalkart, when I joined, Zoho Books data classification was at 45% accuracy — transactions were being miscategorised, which was causing incorrect P&L reporting.\n\nI analysed the misclassification patterns and found that most errors came from inconsistent vendor naming and missing keyword rules. I built a formula-driven keyword mapping workflow that automatically assigned categories based on vendor name patterns and transaction descriptions.\n\nWithin 6 weeks classification accuracy improved from 45% to 90%. This directly improved the reliability of our monthly MIS reports that went to senior leadership.",
+      tip: "STAR format: Situation (45% accuracy, wrong P&L) → Task (fix classification) → Action (keyword mapping workflow) → Result (90% accuracy, better reporting). Always end with the business impact, not just the technical fix."
+    },
+    {
+      q: "Why Stryker? Why the medical device domain?",
+      diff: "easy",
+      a: "Medical device is a domain where data quality has a direct downstream impact — supplier quality issues don't just affect cost, they can affect product reliability and patient outcomes. That level of stakes makes the work meaningful.\n\nStryker specifically — the focus on procurement analytics and supplier data engineering aligns precisely with the work I've done in finance and operations data. I'm not changing domains entirely — I'm applying the same data engineering and BI skills in a context where they matter more.\n\nAnd honestly, working with a senior technical interviewer from a strong engineering background is the kind of environment where I'll grow fastest."
+    },
+    {
+      q: "Tell me about a time you failed or made a mistake. What did you learn?",
+      diff: "hard",
+      a: "At Thrillophilia early on, I built a marketing ROI dashboard that went to leadership without proper data validation. One of the revenue attribution formulas had a logic error — it was double-counting bookings that came through multiple channels. Leadership used it for a budget decision before we caught the mistake.\n\nI caught it during a reconciliation check the following week. I immediately flagged it to my manager, rebuilt the logic, documented the validation process, and we added a peer review step before any dashboard went to leadership after that.\n\nWhat I learned: data that goes to decision-makers needs a reconciliation check, not just a technical review. Speed is not more important than accuracy in financial reporting.",
+      tip: "Never say 'I can't think of a failure.' That's a red flag. This answer shows accountability, a fix, and a systemic change — exactly what a good engineer does."
+    },
+    {
+      q: "You are applying as a fresher to Azure/Data Engineering. Why should we pick you over someone with 3 years of pure DE experience?",
+      diff: "hard",
+      a: "A pure DE engineer with 3 years knows the tools better than I do right now — I won't pretend otherwise. But what I bring that many DE candidates don't is the business context.\n\nI've sat with finance teams, procurement managers, and operations leads. I know what a DSO means to a CFO, what a supplier quality KPI means to a sourcing head. I can build a pipeline AND explain to a business leader why the numbers look the way they do.\n\nStryker's JD asks for someone who can partner with Global Procurement and Strategic Sourcing — that requires both technical capability and business communication. I've been doing the communication side for 2.6 years. I'm investing this week in building the technical depth to match.",
+      tip: "This answer is confident without being arrogant. It acknowledges the gap honestly and turns it into a differentiator. IIT interviewers respect self-awareness over bravado."
+    }
+  ]
+};
+
+function renderQA(containerId, items, cat) {
+  const container = document.getElementById(containerId);
+  items.forEach((item, i) => {
+    const div = document.createElement('div');
+    div.className = 'qa-item';
+    const diffClass = item.diff === 'hard' ? 'diff-hard' : item.diff === 'med' ? 'diff-med' : 'diff-easy';
+    const diffLabel = item.diff === 'hard' ? 'Hard' : item.diff === 'med' ? 'Medium' : 'Easy';
+    const iconClass = `icon-${cat}`;
+
+    let bodyHTML = `<div class="qa-a-label">// model answer</div>
+      <div class="qa-a-text">${item.a.replace(/\n/g, '<br>')}</div>`;
+
+    if (item.code) {
+      const highlighted = item.code
+        .replace(/\b(SELECT|FROM|WHERE|JOIN|LEFT|INNER|RIGHT|FULL|OUTER|ON|GROUP BY|ORDER BY|HAVING|WITH|AS|AND|OR|NOT|NULL|IS|IN|LIKE|DISTINCT|UNION|ALL|INSERT|UPDATE|DELETE|CREATE|TABLE|INDEX|OVER|PARTITION BY|RANK|ROW_NUMBER|DENSE_RANK|LAG|LEAD|COALESCE|NULLIF|ISNULL|DATEDIFF|FORMAT|ROUND|DIVIDE|CALCULATE|SUM|COUNT|AVG|MAX|MIN|SWITCH|TRUE|RETURN|VAR|DATESMTD|DATESYTD|PREVIOUSMONTH|USERPRINCIPALNAME)\b/g, '<span class="kw">$1</span>')
+        .replace(/--[^\n]*/g, '<span class="cm">$&</span>');
+      bodyHTML += `<div class="code-block">${highlighted}</div>`;
+    }
+
+    if (item.tip) {
+      bodyHTML += `<div class="tip-box"><strong>💡 Interview tip:</strong> ${item.tip}</div>`;
+    }
+
+    div.innerHTML = `
+      <div class="qa-q" onclick="toggleQA(this)">
+        <span class="qa-icon ${iconClass}">${cat.toUpperCase()}</span>
+        <span class="qa-q-text">${item.q}</span>
+        <span class="qa-difficulty ${diffClass}">${diffLabel}</span>
+        <span class="qa-chevron">▶</span>
+      </div>
+      <div class="qa-a">${bodyHTML}</div>
+    `;
+    container.appendChild(div);
+  });
+}
+
+function toggleQA(el) {
+  el.parentElement.classList.toggle('open');
+}
+
+function switchTab(cat, btn) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('sec-' + cat).classList.add('active');
+}
+
+renderQA('qa-sql', data.sql, 'sql');
+renderQA('qa-azure', data.azure, 'azure');
+renderQA('qa-bi', data.bi, 'bi');
+renderQA('qa-python', data.python, 'python');
+renderQA('qa-behavioral', data.behavioral, 'behavioral');
+</script>
+</body>
+</html>
